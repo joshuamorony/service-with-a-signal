@@ -1,0 +1,37 @@
+{
+  "name": "service-with-a-signal",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "v16.0.0-next.5",
+    "@angular/common": "v16.0.0-next.5",
+    "@angular/compiler": "v16.0.0-next.5",
+    "@angular/core": "v16.0.0-next.5",
+    "@angular/forms": "v16.0.0-next.5",
+    "@angular/platform-browser": "v16.0.0-next.5",
+    "@angular/platform-browser-dynamic": "v16.0.0-next.5",
+    "@angular/router": "v16.0.0-next.5",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.5.0",
+    "zone.js": "^0.12.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "v16.0.0-next.5",
+    "@angular/cli": "v16.0.0-next.5",
+    "@angular/compiler-cli": "v16.0.0-next.5",
+    "@types/jasmine": "~4.0.0",
+    "jasmine-core": "~4.1.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.0.0",
+    "karma-jasmine-html-reporter": "~1.7.0",
+    "typescript": "~4.9.3"
+  }
+}
