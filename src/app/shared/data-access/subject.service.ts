@@ -1,22 +1,42 @@
 import { inject, Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Subject } from "rxjs";
+import { switchMap, scan, tap, startWith } from "rxjs/operators";
 import { MyApi } from "./my-api";
 
 @Injectable({
   providedIn: "root",
 })
 export class MyService {
+  myApiService = inject(MyApi);
 
-  #employees$ = new BehaviorSubject<string[]>([]); // private to this service
-  employees$ = this.#employees$.asObservable(); // exposed publicly
+  #modifyEmployees$ = new Subject<{ name: string; action: "add" | "remove" }>();
+  employees$ = this.myApiService
+    .load()
+    .pipe(
+      switchMap((initialEmployees) =>
+        this.#modifyEmployees$.pipe(
+          // need an initial emission
+          startWith({name: '', action: 'remove'}),
+          // collect values
+          scan(
+            (acc, curr) =>
+              curr.action === "add"
+                ? [...acc, curr.name]
+                : acc.filter(employee => employee !== curr.name),
+            [...initialEmployees]
+          ),
+          // save modified values back to API
+          tap((employees) => this.myApiService.save(employees))
+        )
+      ),
+    );
 
   addEmployee(employee: string) {
-    this.#employees$.next([...this.#employees$.value, employee]);
+    this.#modifyEmployees$.next({ name: employee, action: "add" });
   }
 
-  removeEmployee(employeeToRemove: string) {
-    this.#employees$.next([
-      ...this.#employees$.value.filter((employee) => employee !== employeeToRemove),
-    ]);
+  removeEmployee(employee: string){
+    this.#modifyEmployees$.next({name: employee, action: "remove"});
   }
+
 }
