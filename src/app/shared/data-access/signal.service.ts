@@ -9,7 +9,7 @@ export class MyService {
   myApiService = inject(MyApi);
 
   #employees = signal<string[]>([]); // private to this service
-  employees = computed(() => this.#employees()); //exposed publicly
+  employees = computed(this.#employees); //exposed publicly
 
   hasLoaded = false;
 
